@@ -1,12 +1,11 @@
-import WebcamFeed from "./components/WebCamFeed";
-import DeviceInspector from "./components/DeviceInspect";
+import { useState } from "react";
+import Dashboard from "./components/Dashboard";
+import "./App.css";
 
 export default function App() {
   return (
-    <div style={{ padding: 20 }}>
-      <h1>Human Presence Trust</h1>
-      <WebcamFeed />
-      <DeviceInspector />
+    <div className="app">
+      <Dashboard />
     </div>
   );
 }
