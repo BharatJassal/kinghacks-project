@@ -144,20 +144,58 @@ function Score({ signals, onScoreCalculated, onEvaluate, isEvaluating }) {
       </div>
 
       <div className="score-breakdown">
-        <h3>Deductions</h3>
-        <div className="penalty-list">
-          {breakdown && breakdown.length > 0 ? (
-            breakdown.map((penalty, idx) => (
-              <div key={idx} className="penalty-item">
-                <span className="reason">{penalty.reason}</span>
-                <span className="points">{penalty.points}</span>
-              </div>
-            ))
-          ) : (
-            <div className="no-penalties">
-              <span style={{ color: '#60a5fa', fontSize: '0.875rem' }}>✓ No deductions - Perfect score!</span>
-            </div>
-          )}
+        <h3>Signal Status</h3>
+        <div className="deduction-grid">
+          {/* All possible deductions as boxes */}
+          <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('virtual')) ? 'flagged' : 'passed'}`}>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('virtual')) ? '⚠️' : '✓'}</div>
+            <div className="deduction-label">Virtual Camera</div>
+          </div>
+          
+          <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('No cameras')) ? 'flagged' : 'passed'}`}>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('No cameras')) ? '⚠️' : '✓'}</div>
+            <div className="deduction-label">Camera Present</div>
+          </div>
+          
+          <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('timing')) ? 'flagged' : 'passed'}`}>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('timing')) ? '⚠️' : '✓'}</div>
+            <div className="deduction-label">Frame Timing</div>
+          </div>
+          
+          <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('jitter')) ? 'flagged' : 'passed'}`}>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('jitter')) ? '⚠️' : '✓'}</div>
+            <div className="deduction-label">Frame Jitter</div>
+          </div>
+          
+          <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('motion detected')) ? 'flagged' : 'passed'}`}>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('motion detected')) ? '⚠️' : '✓'}</div>
+            <div className="deduction-label">Motion Detected</div>
+          </div>
+          
+          <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('movement pattern')) ? 'flagged' : 'passed'}`}>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('movement pattern')) ? '⚠️' : '✓'}</div>
+            <div className="deduction-label">Natural Movement</div>
+          </div>
+          
+          <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('confidence')) ? 'flagged' : 'passed'}`}>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('confidence')) ? '⚠️' : '✓'}</div>
+            <div className="deduction-label">Motion Quality</div>
+          </div>
+          
+          <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('Headless')) ? 'flagged' : 'passed'}`}>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('Headless')) ? '⚠️' : '✓'}</div>
+            <div className="deduction-label">Real Browser</div>
+          </div>
+          
+          <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('Automation')) ? 'flagged' : 'passed'}`}>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('Automation')) ? '⚠️' : '✓'}</div>
+            <div className="deduction-label">No Automation</div>
+          </div>
+          
+          <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('viewport')) ? 'flagged' : 'passed'}`}>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('viewport')) ? '⚠️' : '✓'}</div>
+            <div className="deduction-label">Normal Viewport</div>
+          </div>
         </div>
       </div>
 
