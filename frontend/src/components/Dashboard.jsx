@@ -48,6 +48,7 @@ function Dashboard() {
   const [trustScore, setTrustScore] = useState(null);
   const [backendResponse, setBackendResponse] = useState(null);
   const [isEvaluating, setIsEvaluating] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   // Aggregate all signals for trust scoring
   const allSignals = {
@@ -79,12 +80,14 @@ function Dashboard() {
       
       const result = await response.json();
       setBackendResponse(result);
+      setShowPopup(true); // Show popup instead of bottom section
     } catch (error) {
       console.error('Backend evaluation failed:', error);
       setBackendResponse({
         error: 'Failed to connect to backend',
         details: error.message
       });
+      setShowPopup(true); // Show popup even on error
     } finally {
       setIsEvaluating(false);
     }
@@ -94,17 +97,19 @@ function Dashboard() {
     <div className="dashboard">
       <header className="dashboard-header">
         <h1>Human Presence Trust System</h1>
-        <p className="subtitle">Privacy-first biometric verification with AI deepfake detection & rPPG heartbeat analysis</p>
+        <p className="subtitle">
+          Privacy-first biometric verification with AI deepfake detection & rPPG heartbeat analysis
+        </p>
       </header>
 
       <div className="dashboard-grid">
-        {/* Main webcam feed */}
+        {/* Main webcam feed - Large left section */}
         <section className="feed-section">
-          <h2>Live Feed</h2>
+          <h2>Live Camera Feed</h2>
           <WebCamFeed onStreamReady={setStream} />
         </section>
 
-        {/* Trust score number */}
+        {/* Trust score display - Top right */}
         <section className="score-section">
           <h2>Trust Score</h2>
           <Score 
@@ -116,7 +121,7 @@ function Dashboard() {
           />
         </section>
 
-        {/* Signal Status Boxes */}
+        {/* Signal Status Boxes - Right column */}
         <section className="signal-boxes-section">
           <h2>Signal Status</h2>
           <Score 
@@ -128,7 +133,7 @@ function Dashboard() {
           />
         </section>
 
-        {/* Device inspection */}
+        {/* Individual analysis sections */}
         <section className="signal-section">
           <h2>Device Analysis</h2>
           <DeviceInspect 
@@ -137,7 +142,6 @@ function Dashboard() {
           />
         </section>
 
-        {/* Frame timing analysis */}
         <section className="signal-section">
           <h2>Frame Timing</h2>
           <FrameTiming 
@@ -156,34 +160,38 @@ function Dashboard() {
         </section>
 
         <section className="signal-section">
-          <h2>rPPG Heartbeat Detection</h2>
+          <h2>rPPG Heartbeat</h2>
           <RppgAnalyze 
             stream={stream}
             onSignalsUpdate={setRppgSignals}
           />
         </section>
 
-        {/* Environment analysis */}
         <section className="signal-section">
           <h2>Environment Check</h2>
           <EnvironmentAnalyze 
             onSignalsUpdate={setEnvironmentSignals}
           />
         </section>
-
-        {/* Backend response display */}
-        {backendResponse && (
-          <section className="response-section">
-            <h2>Backend Decision</h2>
-            <div className="response-card">
-              <pre>{JSON.stringify(backendResponse, null, 2)}</pre>
-            </div>
-          </section>
-        )}
       </div>
 
+      {/* Popup Modal for Backend Response */}
+      {showPopup && backendResponse && (
+        <div className="modal-overlay" onClick={() => setShowPopup(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Backend Governance Decision</h2>
+              <button className="modal-close" onClick={() => setShowPopup(false)}>×</button>
+            </div>
+            <div className="modal-body">
+              <pre>{JSON.stringify(backendResponse, null, 2)}</pre>
+            </div>
+          </div>
+        </div>
+      )}
+
       <footer className="dashboard-footer">
-        <p>All video processing happens client-side - No raw video transmitted</p>
+        <p>All video processing happens client-side — No raw video transmitted</p>
       </footer>
     </div>
   );
