@@ -8,7 +8,7 @@
 
 /* Dashboard Layout */
 .dashboard {
-  max-width: 1600px;
+  max-width: 1400px;
   margin: 0 auto;
   animation: fadeIn 0.5s ease-in;
 }
@@ -77,6 +77,11 @@
   grid-column: 1 / -1;
   grid-row: 3;
 }
+
+.feed-section,
+.signal-section,
+.score-section,
+.response-section {
   background: #111827;
   border-radius: 12px;
   padding: 1.5rem;
@@ -287,6 +292,7 @@
 /* Score Breakdown */
 .score-breakdown {
   margin-top: 1.5rem;
+  min-height: 140px;
 }
 
 .score-breakdown h3 {
@@ -298,6 +304,23 @@
   letter-spacing: 0.5px;
 }
 
+.penalty-list {
+  min-height: 100px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.no-penalties {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100px;
+  padding: 1rem;
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 6px;
+  border: 1px dashed rgba(59, 130, 246, 0.3);
+}
+
 .penalty-item {
   display: flex;
   justify-content: space-between;
@@ -307,6 +330,18 @@
   background: rgba(239, 68, 68, 0.05);
   border-radius: 6px;
   border-left: 2px solid #ef4444;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .penalty-item .reason {

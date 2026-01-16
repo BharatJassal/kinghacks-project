@@ -143,17 +143,23 @@ function Score({ signals, onScoreCalculated, onEvaluate, isEvaluating }) {
         <div className="score-label">{getScoreLabel()}</div>
       </div>
 
-      {breakdown && breakdown.length > 0 && (
-        <div className="score-breakdown">
-          <h3>Deductions</h3>
-          {breakdown.map((penalty, idx) => (
-            <div key={idx} className="penalty-item">
-              <span className="reason">{penalty.reason}</span>
-              <span className="points">{penalty.points}</span>
+      <div className="score-breakdown">
+        <h3>Deductions</h3>
+        <div className="penalty-list">
+          {breakdown && breakdown.length > 0 ? (
+            breakdown.map((penalty, idx) => (
+              <div key={idx} className="penalty-item">
+                <span className="reason">{penalty.reason}</span>
+                <span className="points">{penalty.points}</span>
+              </div>
+            ))
+          ) : (
+            <div className="no-penalties">
+              <span style={{ color: '#60a5fa', fontSize: '0.875rem' }}>✓ No deductions - Perfect score!</span>
             </div>
-          ))}
+          )}
         </div>
-      )}
+      </div>
 
       <button 
         className="evaluate-button"
