@@ -84,7 +84,7 @@ function Dashboard() {
           <WebCamFeed onStreamReady={setStream} />
         </section>
 
-        {/* Trust score calculator */}
+        {/* Trust score number */}
         <section className="score-section">
           <h2>Trust Score</h2>
           <Score 
@@ -92,6 +92,19 @@ function Dashboard() {
             onScoreCalculated={setTrustScore}
             onEvaluate={handleEvaluate}
             isEvaluating={isEvaluating}
+            showOnlyScore={true}
+          />
+        </section>
+
+        {/* Signal Status Boxes */}
+        <section className="signal-boxes-section">
+          <h2>Signal Status</h2>
+          <Score 
+            signals={allSignals}
+            onScoreCalculated={setTrustScore}
+            onEvaluate={handleEvaluate}
+            isEvaluating={isEvaluating}
+            showOnlyBoxes={true}
           />
         </section>
 
