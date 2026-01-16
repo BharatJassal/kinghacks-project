@@ -138,45 +138,51 @@ export default function FrameTiming({ stream, onSignalsUpdate }) {
 
   return (
     <div className="frame-timing">
-      <div className="timing-stats">
-        <div className="stat">
-          <span className="label">Current FPS:</span>
-          <span className="value">{timingData.currentFps}</span>
+      <div className="signal-card">
+        <div className="signal-row">
+          <span className="signal-label">Current FPS</span>
+          <span className="signal-value">{timingData.currentFps}</span>
         </div>
         
-        <div className="stat">
-          <span className="label">Average FPS:</span>
-          <span className={`value ${fpsStatus.class}`}>
-            {timingData.avgFps} <small>({fpsStatus.label})</small>
+        <div className="signal-row">
+          <span className="signal-label">Average FPS</span>
+          <span className={`signal-value ${fpsStatus.class === 'ok' ? 'good' : fpsStatus.class === 'warning' ? 'bad' : 'warning'}`}>
+            {timingData.avgFps}
           </span>
         </div>
         
-        <div className="stat">
-          <span className="label">Jitter:</span>
-          <span className={`value ${jitterStatus.class}`}>
-            {timingData.jitter}ms <small>({jitterStatus.label})</small>
+        <div className="signal-row">
+          <span className="signal-label">Jitter</span>
+          <span className={`signal-value ${jitterStatus.class === 'ok' ? 'good' : jitterStatus.class === 'warning' ? 'bad' : 'warning'}`}>
+            {timingData.jitter}ms
           </span>
         </div>
 
-        <div className="stat">
-          <span className="label">Frames Analyzed:</span>
-          <span className="value">{timingData.frameCount}</span>
+        <div className="signal-row">
+          <span className="signal-label">Frames Analyzed</span>
+          <span className="signal-value">{timingData.frameCount}</span>
         </div>
       </div>
 
       {timingData.anomalyDetected && (
-        <div className="anomaly-alert">
-          <p>⚠️ <strong>Timing Anomaly Detected</strong></p>
-          <p className="detail">
-            Frame timing patterns suggest non-biological source
-          </p>
+        <div style={{ 
+          marginTop: '1rem', 
+          padding: '1rem', 
+          background: 'rgba(239, 68, 68, 0.1)', 
+          borderRadius: '6px', 
+          border: '1px solid rgba(239, 68, 68, 0.2)' 
+        }}>
+          <div style={{ color: '#fca5a5', fontWeight: '600', marginBottom: '0.25rem', fontSize: '0.875rem' }}>
+            ⚠️ Timing Anomaly
+          </div>
+          <div style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
+            Non-standard frame timing detected
+          </div>
         </div>
       )}
 
-      <div className="timing-info">
-        <p className="info-text">
-          Real webcams typically run at 25-30 FPS with 5-10ms jitter due to natural head movement and lighting changes.
-        </p>
+      <div className="help-text" style={{ marginTop: '1rem', fontSize: '0.8rem', lineHeight: '1.5' }}>
+        💡 Normal: 25-30 FPS, 5-10ms jitter
       </div>
     </div>
   );

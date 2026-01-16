@@ -114,7 +114,10 @@ function Score({ signals, onScoreCalculated, onEvaluate, isEvaluating }) {
   if (score === null) {
     return (
       <div className="score calculating">
-        <p>⏳ Collecting signals...</p>
+        <div className="loading-state">
+          <div className="spinner"></div>
+          <p>⏳ Collecting signals...</p>
+        </div>
       </div>
     );
   }
@@ -128,15 +131,13 @@ function Score({ signals, onScoreCalculated, onEvaluate, isEvaluating }) {
 
       {breakdown && breakdown.length > 0 && (
         <div className="score-breakdown">
-          <h4>Trust Score Breakdown</h4>
-          <ul>
-            {breakdown.map((penalty, idx) => (
-              <li key={idx} className="penalty-item">
-                <span className="penalty-reason">{penalty.reason}</span>
-                <span className="penalty-points">{penalty.points}</span>
-              </li>
-            ))}
-          </ul>
+          <h3>Deductions</h3>
+          {breakdown.map((penalty, idx) => (
+            <div key={idx} className="penalty-item">
+              <span className="reason">{penalty.reason}</span>
+              <span className="points">{penalty.points}</span>
+            </div>
+          ))}
         </div>
       )}
 
@@ -145,12 +146,21 @@ function Score({ signals, onScoreCalculated, onEvaluate, isEvaluating }) {
         onClick={handleEvaluate}
         disabled={isEvaluating}
       >
-        {isEvaluating ? '⏳ Evaluating...' : '🔍 Send to Backend for Evaluation'}
+        {isEvaluating ? '⏳ Evaluating...' : '🔍 Evaluate Trust Score'}
       </button>
 
-      <div className="score-info">
-        <p className="info-text">
-          Trust score is calculated from device authenticity (30%), frame timing patterns (35%), and movement analysis (35%).
+      <div className="score-info" style={{ 
+        marginTop: '1rem', 
+        padding: '0.875rem', 
+        background: 'rgba(59, 130, 246, 0.05)', 
+        borderRadius: '6px',
+        fontSize: '0.8rem',
+        color: '#9ca3af',
+        lineHeight: '1.5',
+        border: '1px solid rgba(59, 130, 246, 0.1)'
+      }}>
+        <p>
+          <strong style={{ color: '#d1d5db' }}>Scoring:</strong> Device (30%) • Timing (35%) • Movement (35%)
         </p>
       </div>
     </div>

@@ -189,48 +189,51 @@ export default function LandmarkAnalyze({ stream, onSignalsUpdate }) {
 
   return (
     <div className="landmark-analyze">
-      <div className="landmark-stats">
-        <div className="stat">
-          <span className="label">Motion Detected:</span>
-          <span className={`value ${landmarkData.faceDetected ? 'ok' : 'warning'}`}>
+      <div className="signal-card">
+        <div className="signal-row">
+          <span className="signal-label">Motion Detected</span>
+          <span className={`signal-value ${landmarkData.faceDetected ? 'good' : 'bad'}`}>
             {landmarkData.faceDetected ? '✓ Yes' : '✗ No'}
           </span>
         </div>
 
-        <div className="stat">
-          <span className="label">Motion Score:</span>
-          <span className="value">{landmarkData.confidenceScore}%</span>
+        <div className="signal-row">
+          <span className="signal-label">Motion Score</span>
+          <span className="signal-value">{landmarkData.confidenceScore}%</span>
         </div>
 
-        <div className="stat">
-          <span className="label">Movement Pattern:</span>
-          <span className={`value ${landmarkData.movementNatural ? 'ok' : 'warning'}`}>
+        <div className="signal-row">
+          <span className="signal-label">Movement Pattern</span>
+          <span className={`signal-value ${landmarkData.movementNatural ? 'good' : 'bad'}`}>
             {landmarkData.movementNatural ? '✓ Natural' : '⚠️ Suspicious'}
           </span>
         </div>
 
-        <div className="stat">
-          <span className="label">Samples:</span>
-          <span className="value">{landmarkData.landmarkCount}</span>
+        <div className="signal-row">
+          <span className="signal-label">Samples</span>
+          <span className="signal-value">{landmarkData.landmarkCount}</span>
         </div>
       </div>
 
       {!landmarkData.movementNatural && (
-        <div className="anomaly-alert">
-          <p>⚠️ <strong>Unnatural Movement Pattern</strong></p>
-          <p className="detail">
-            Motion patterns suggest static image or pre-recorded video
-          </p>
+        <div style={{ 
+          marginTop: '1rem', 
+          padding: '1rem', 
+          background: 'rgba(239, 68, 68, 0.1)', 
+          borderRadius: '6px', 
+          border: '1px solid rgba(239, 68, 68, 0.2)' 
+        }}>
+          <div style={{ color: '#fca5a5', fontWeight: '600', marginBottom: '0.25rem', fontSize: '0.875rem' }}>
+            ⚠️ Unnatural Movement
+          </div>
+          <div style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
+            Movement pattern anomaly detected
+          </div>
         </div>
       )}
 
-      <div className="landmark-info">
-        <p className="info-text">
-          <strong>Current Implementation:</strong> Basic motion detection using frame differencing.
-        </p>
-        <p className="info-text">
-          <strong>Future Enhancement:</strong> Integrate MediaPipe or TensorFlow.js for 468-point facial landmark tracking, blink detection, and micro-expression analysis.
-        </p>
+      <div className="help-text" style={{ marginTop: '1rem', fontSize: '0.8rem', lineHeight: '1.5' }}>
+        💡 Frame-based motion detection
       </div>
     </div>
   );
