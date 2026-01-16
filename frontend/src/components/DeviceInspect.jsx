@@ -110,25 +110,27 @@ export default function DeviceInspect({ stream, onSignalsUpdate }) {
 
   return (
     <div className="device-inspect">
-      <div className="device-summary">
-        <div className="stat">
-          <span className="label">Total Cameras:</span>
-          <span className="value">{deviceInfo.deviceCount}</span>
+      <div className="signal-card">
+        <div className="signal-row">
+          <span className="signal-label">Total Cameras</span>
+          <span className="signal-value">{deviceInfo.deviceCount}</span>
         </div>
-        <div className="stat">
-          <span className="label">Virtual Detected:</span>
-          <span className={`value ${deviceInfo.hasVirtualCamera ? 'warning' : 'ok'}`}>
-            {deviceInfo.hasVirtualCamera ? '⚠️ Yes' : '✓ No'}
+        <div className="signal-row">
+          <span className="signal-label">Virtual Camera</span>
+          <span className={`signal-value ${deviceInfo.hasVirtualCamera ? 'bad' : 'good'}`}>
+            {deviceInfo.hasVirtualCamera ? '⚠️ Detected' : '✓ None'}
           </span>
         </div>
       </div>
 
       {deviceInfo.activeCamera && (
-        <div className="active-device">
-          <h4>Active Camera</h4>
-          <p className="device-label">{deviceInfo.activeCamera.label}</p>
+        <div className="signal-card" style={{ marginTop: '1rem', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)' }}>
+          <div style={{ fontWeight: '600', color: '#60a5fa', marginBottom: '0.5rem', fontSize: '0.875rem' }}>📹 Active Camera</div>
+          <div style={{ fontSize: '0.85rem', color: '#d1d5db' }}>{deviceInfo.activeCamera.label}</div>
           {detectVirtualCamera(deviceInfo.activeCamera.label) && (
-            <p className="warning-text">⚠️ This appears to be a virtual camera</p>
+            <div style={{ marginTop: '0.5rem', padding: '0.5rem', background: 'rgba(239, 68, 68, 0.1)', borderRadius: '6px', color: '#fca5a5', fontSize: '0.8rem', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
+              ⚠️ Virtual camera detected
+            </div>
           )}
         </div>
       )}
