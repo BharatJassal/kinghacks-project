@@ -49,6 +49,9 @@ function Dashboard() {
   const [backendResponse, setBackendResponse] = useState(null);
   const [isEvaluating, setIsEvaluating] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [sessionStart] = useState(Date.now());
+  const [sessionDuration, setSessionDuration] = useState('00:00');
+  const [previousScore, setPreviousScore] = useState(null);
 
   // Aggregate all signals for trust scoring
   const allSignals = {
@@ -58,6 +61,55 @@ function Dashboard() {
     environment: environmentSignals,
     deepfake: deepfakeSignals,
     rppg: rppgSignals
+  };
+
+  // Update session duration every 2 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - sessionStart) / 1000);
+      const minutes = Math.floor(elapsed / 60);
+      const seconds = elapsed % 60;
+      setSessionDuration(`${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [sessionStart]);
+
+  // Track score changes for risk trend
+  useEffect(() => {
+    if (trustScore !== null && trustScore !== previousScore) {
+      setPreviousScore(trustScore);
+    }
+  }, [trustScore, previousScore]);
+
+  // Derive presence summary data
+  const getPresenceState = () => {
+    if (!stream) return 'Inactive';
+    if (trustScore === null) return 'Initializing';
+    if (trustScore >= 70) return 'Active / Stable';
+    if (trustScore >= 50) return 'Active / Monitoring';
+    return 'Active / Warning';
+  };
+
+  const getMotionPattern = () => {
+    if (!landmarkSignals.faceDetected) return 'No motion detected';
+    if (landmarkSignals.movementNatural) return 'Natural';
+    return 'Irregular';
+  };
+
+  const getFrameStability = () => {
+    if (!timingSignals.jitter) return 'Measuring...';
+    if (timingSignals.jitter < 5) return 'Very stable';
+    if (timingSignals.jitter < 15) return 'Stable';
+    if (timingSignals.jitter < 25) return 'Moderate variance';
+    return 'High variance';
+  };
+
+  const getRiskTrend = () => {
+    if (previousScore === null || trustScore === null) return 'Initializing';
+    const diff = trustScore - previousScore;
+    if (Math.abs(diff) < 5) return 'Stable';
+    if (diff > 0) return 'Improving';
+    return 'Declining';
   };
 
   // Handle evaluation request to backend
@@ -107,6 +159,34 @@ function Dashboard() {
         <section className="feed-section">
           <h2>Live Camera Feed</h2>
           <WebCamFeed onStreamReady={setStream} />
+          
+          {stream && (
+            <div className="presence-summary">
+              <h3>Live Presence Summary</h3>
+              <div className="summary-grid">
+                <div className="summary-item">
+                  <span className="summary-label">Presence state:</span>
+                  <span className="summary-value">{getPresenceState()}</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">Session duration:</span>
+                  <span className="summary-value">{sessionDuration}</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">Motion pattern:</span>
+                  <span className="summary-value">{getMotionPattern()}</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">Frame stability:</span>
+                  <span className="summary-value">{getFrameStability()}</span>
+                </div>
+                <div className="summary-item">
+                  <span className="summary-label">Risk trend:</span>
+                  <span className="summary-value">{getRiskTrend()}</span>
+                </div>
+              </div>
+            </div>
+          )}
         </section>
 
         {/* Trust score display - Top right */}
