@@ -30,18 +30,23 @@ export default function DeviceInspect({ stream, onSignalsUpdate }) {
 
         // Find the active camera from the stream
         let activeCamera = null;
+        let activeDeviceIsVirtual = false;
         if (stream) {
           const tracks = stream.getVideoTracks();
           if (tracks.length > 0) {
             const activeLabel = tracks[0].label;
             activeCamera = videoInputs.find(d => d.label === activeLabel);
+            // Check if the ACTIVE camera is virtual
+            if (activeCamera) {
+              activeDeviceIsVirtual = detectVirtualCamera(activeCamera.label);
+            }
           }
         }
 
         const info = {
           devices: videoInputs,
           activeCamera: activeCamera,
-          hasVirtualCamera: virtualCameras.length > 0,
+          hasVirtualCamera: activeDeviceIsVirtual, // Changed: only true if active camera is virtual
           deviceCount: videoInputs.length,
           deviceLabels: videoInputs.map(d => d.label),
           isLoading: false,
@@ -53,10 +58,10 @@ export default function DeviceInspect({ stream, onSignalsUpdate }) {
         // Send signals to parent Dashboard
         if (onSignalsUpdate) {
           onSignalsUpdate({
-            hasVirtualCamera: info.hasVirtualCamera,
+            hasVirtualCamera: activeDeviceIsVirtual, // Changed: only check active camera
             deviceCount: info.deviceCount,
             deviceLabels: info.deviceLabels,
-            activeDeviceIsVirtual: activeCamera ? detectVirtualCamera(activeCamera.label) : false
+            activeDeviceIsVirtual: activeDeviceIsVirtual
           });
         }
 
