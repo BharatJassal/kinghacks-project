@@ -189,6 +189,20 @@ function Score({ signals, onScoreCalculated, onEvaluate, isEvaluating, showOnlyS
           <div className="score-value">{score}</div>
           <div className="score-label">{getScoreLabel()}</div>
         </div>
+        <div className="score-info" style={{ 
+          marginTop: '1rem',
+          padding: '0.75rem', 
+          background: 'rgba(59, 130, 246, 0.05)', 
+          borderRadius: '6px',
+          fontSize: '0.75rem',
+          color: 'var(--color-text-muted)',
+          lineHeight: '1.5',
+          border: '1px solid rgba(59, 130, 246, 0.1)',
+          textAlign: 'center'
+        }}>
+          <strong style={{ color: 'var(--color-text-tertiary)' }}>Real-time Analysis</strong><br />
+          Updated every 2 seconds
+        </div>
       </div>
     );
   }
@@ -200,88 +214,88 @@ function Score({ signals, onScoreCalculated, onEvaluate, isEvaluating, showOnlyS
         <div className="deduction-grid" style={{ marginBottom: '1.25rem' }}>
           {/* All possible deductions as boxes */}
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('virtual')) ? 'flagged' : 'passed'}`}>
-            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('virtual')) ? '!' : 'OK'}</div>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('virtual')) ? '⚠' : '✓'}</div>
             <div className="deduction-label">Virtual Camera</div>
           </div>
           
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('No cameras')) ? 'flagged' : 'passed'}`}>
-            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('No cameras')) ? '!' : 'OK'}</div>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('No cameras')) ? '⚠' : '✓'}</div>
             <div className="deduction-label">Camera Present</div>
           </div>
           
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('timing')) ? 'flagged' : 'passed'}`}>
-            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('timing')) ? '!' : 'OK'}</div>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('timing')) ? '⚠' : '✓'}</div>
             <div className="deduction-label">Frame Timing</div>
           </div>
           
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('jitter')) ? 'flagged' : 'passed'}`}>
-            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('jitter')) ? '!' : 'OK'}</div>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('jitter')) ? '⚠' : '✓'}</div>
             <div className="deduction-label">Frame Jitter</div>
           </div>
           
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('motion detected')) ? 'flagged' : 'passed'}`}>
-            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('motion detected')) ? '!' : 'OK'}</div>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('motion detected')) ? '⚠' : '✓'}</div>
             <div className="deduction-label">Motion Detected</div>
           </div>
           
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('movement pattern')) ? 'flagged' : 'passed'}`}>
-            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('movement pattern')) ? '!' : 'OK'}</div>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('movement pattern')) ? '⚠' : '✓'}</div>
             <div className="deduction-label">Natural Movement</div>
           </div>
           
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('confidence')) ? 'flagged' : 'passed'}`}>
-            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('confidence')) ? '!' : 'OK'}</div>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('confidence')) ? '⚠' : '✓'}</div>
             <div className="deduction-label">Motion Quality</div>
           </div>
           
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('Headless')) ? 'flagged' : 'passed'}`}>
-            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('Headless')) ? '!' : 'OK'}</div>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('Headless')) ? '⚠' : '✓'}</div>
             <div className="deduction-label">Real Browser</div>
           </div>
           
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('Automation')) ? 'flagged' : 'passed'}`}>
-            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('Automation')) ? '!' : 'OK'}</div>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('Automation')) ? '⚠' : '✓'}</div>
             <div className="deduction-label">No Automation</div>
           </div>
           
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('viewport')) ? 'flagged' : 'passed'}`}>
-            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('viewport')) ? '!' : 'OK'}</div>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('viewport')) ? '⚠' : '✓'}</div>
             <div className="deduction-label">Normal Viewport</div>
           </div>
 
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('deepfake')) ? 'flagged' : 'passed'}`} style={{
             gridColumn: 'span 2',
-            background: breakdown?.find(p => p.reason.includes('deepfake')) ? 'rgba(239, 68, 68, 0.15)' : undefined,
-            border: breakdown?.find(p => p.reason.includes('deepfake')) ? '2px solid rgba(239, 68, 68, 0.5)' : undefined
+            background: breakdown?.find(p => p.reason.includes('deepfake')) ? 'rgba(239, 68, 68, 0.15)' : 'rgba(34, 197, 94, 0.08)',
+            border: breakdown?.find(p => p.reason.includes('deepfake')) ? '2px solid rgba(239, 68, 68, 0.5)' : '2px solid rgba(34, 197, 94, 0.3)'
           }}>
-            <div className="deduction-icon" style={{ fontSize: '1.5rem' }}>
-              {breakdown?.find(p => p.reason.includes('deepfake')) ? 'AI' : 'OK'}
+            <div className="deduction-icon" style={{ fontSize: '2rem' }}>
+              {breakdown?.find(p => p.reason.includes('deepfake')) ? '🤖' : '👤'}
             </div>
-            <div className="deduction-label" style={{ fontWeight: '700' }}>
-              {breakdown?.find(p => p.reason.includes('deepfake')) ? 'AI DEEPFAKE DETECTED' : 'Real Human'}
+            <div className="deduction-label" style={{ fontWeight: '700', fontSize: '0.8rem' }}>
+              {breakdown?.find(p => p.reason.includes('deepfake')) ? 'AI DEEPFAKE DETECTED' : 'Real Human Face'}
             </div>
           </div>
 
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('blink')) ? 'flagged' : 'passed'}`}>
-            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('blink')) ? '!' : 'OK'}</div>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('blink')) ? '⚠' : '✓'}</div>
             <div className="deduction-label">Blink Pattern</div>
           </div>
 
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('heartbeat')) ? 'flagged' : 'passed'}`} style={{
             gridColumn: 'span 2',
-            background: breakdown?.find(p => p.reason.includes('heartbeat')) ? 'rgba(239, 68, 68, 0.15)' : 'rgba(34, 197, 94, 0.1)',
-            border: breakdown?.find(p => p.reason.includes('heartbeat')) ? '2px solid rgba(239, 68, 68, 0.5)' : '2px solid rgba(34, 197, 94, 0.3)'
+            background: breakdown?.find(p => p.reason.includes('heartbeat')) ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.1)',
+            border: breakdown?.find(p => p.reason.includes('heartbeat')) ? '2px solid rgba(239, 68, 68, 0.5)' : '2px solid rgba(16, 185, 129, 0.4)'
           }}>
-            <div className="deduction-icon" style={{ fontSize: '1.5rem' }}>
-              {breakdown?.find(p => p.reason.includes('heartbeat')) ? 'NO' : 'HR'}
+            <div className="deduction-icon" style={{ fontSize: '2rem' }}>
+              {breakdown?.find(p => p.reason.includes('heartbeat')) ? '❌' : '❤️'}
             </div>
-            <div className="deduction-label" style={{ fontWeight: '700' }}>
-              {breakdown?.find(p => p.reason.includes('heartbeat')) ? 'NO HEARTBEAT - AI DETECTED' : 'Real Human Heartbeat'}
+            <div className="deduction-label" style={{ fontWeight: '700', fontSize: '0.8rem' }}>
+              {breakdown?.find(p => p.reason.includes('heartbeat')) ? 'NO HEARTBEAT - AI DETECTED' : 'Live Heartbeat Detected'}
             </div>
           </div>
 
           <div className={`deduction-box ${breakdown?.find(p => p.reason.includes('rPPG')) ? 'flagged' : 'passed'}`}>
-            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('rPPG')) ? '!' : 'OK'}</div>
+            <div className="deduction-icon">{breakdown?.find(p => p.reason.includes('rPPG')) ? '⚠' : '✓'}</div>
             <div className="deduction-label">rPPG Quality</div>
           </div>
         </div>

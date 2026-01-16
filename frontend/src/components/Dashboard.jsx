@@ -94,17 +94,19 @@ function Dashboard() {
     <div className="dashboard">
       <header className="dashboard-header">
         <h1>Human Presence Trust System</h1>
-        <p className="subtitle">Privacy-first biometric verification with AI deepfake detection & rPPG heartbeat analysis</p>
+        <p className="subtitle">
+          Privacy-first biometric verification with AI deepfake detection & rPPG heartbeat analysis
+        </p>
       </header>
 
       <div className="dashboard-grid">
-        {/* Main webcam feed */}
+        {/* Main webcam feed - Large left section */}
         <section className="feed-section">
-          <h2>Live Feed</h2>
+          <h2>Live Camera Feed</h2>
           <WebCamFeed onStreamReady={setStream} />
         </section>
 
-        {/* Trust score number */}
+        {/* Trust score display - Top right */}
         <section className="score-section">
           <h2>Trust Score</h2>
           <Score 
@@ -116,7 +118,7 @@ function Dashboard() {
           />
         </section>
 
-        {/* Signal Status Boxes */}
+        {/* Signal Status Boxes - Right column */}
         <section className="signal-boxes-section">
           <h2>Signal Status</h2>
           <Score 
@@ -128,7 +130,7 @@ function Dashboard() {
           />
         </section>
 
-        {/* Device inspection */}
+        {/* Individual analysis sections */}
         <section className="signal-section">
           <h2>Device Analysis</h2>
           <DeviceInspect 
@@ -137,7 +139,6 @@ function Dashboard() {
           />
         </section>
 
-        {/* Frame timing analysis */}
         <section className="signal-section">
           <h2>Frame Timing</h2>
           <FrameTiming 
@@ -156,14 +157,13 @@ function Dashboard() {
         </section>
 
         <section className="signal-section">
-          <h2>rPPG Heartbeat Detection</h2>
+          <h2>rPPG Heartbeat</h2>
           <RppgAnalyze 
             stream={stream}
             onSignalsUpdate={setRppgSignals}
           />
         </section>
 
-        {/* Environment analysis */}
         <section className="signal-section">
           <h2>Environment Check</h2>
           <EnvironmentAnalyze 
@@ -171,10 +171,10 @@ function Dashboard() {
           />
         </section>
 
-        {/* Backend response display */}
+        {/* Backend response - Full width at bottom */}
         {backendResponse && (
           <section className="response-section">
-            <h2>Backend Decision</h2>
+            <h2>Backend Governance Decision</h2>
             <div className="response-card">
               <pre>{JSON.stringify(backendResponse, null, 2)}</pre>
             </div>
@@ -183,7 +183,7 @@ function Dashboard() {
       </div>
 
       <footer className="dashboard-footer">
-        <p>All video processing happens client-side - No raw video transmitted</p>
+        <p>All video processing happens client-side — No raw video transmitted</p>
       </footer>
     </div>
   );
