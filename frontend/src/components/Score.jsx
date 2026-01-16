@@ -15,41 +15,41 @@ function Score({ signals, onScoreCalculated, onEvaluate, isEvaluating }) {
       let totalScore = 100;
       const penalties = [];
 
-      // Device signals (weight: 30%)
+      // Device signals (weight: 35%)
       if (signals.device.hasVirtualCamera) {
-        totalScore -= 30;
-        penalties.push({ reason: "Virtual camera detected", points: -30 });
+        totalScore -= 35;
+        penalties.push({ reason: "Active camera is virtual", points: -35 });
       }
       if (signals.device.deviceCount === 0) {
-        totalScore -= 20;
-        penalties.push({ reason: "No cameras found", points: -20 });
+        totalScore -= 15;
+        penalties.push({ reason: "No cameras found", points: -15 });
       }
 
-      // Timing signals (weight: 35%)
+      // Timing signals (weight: 25% - reduced from 35%)
       if (signals.timing.anomalyDetected) {
-        totalScore -= 25;
-        penalties.push({ reason: "Frame timing anomaly", points: -25 });
+        totalScore -= 15;
+        penalties.push({ reason: "Frame timing anomaly", points: -15 });
       }
       if (signals.timing.jitter < 1) {
-        totalScore -= 15;
-        penalties.push({ reason: "Suspiciously perfect timing", points: -15 });
-      } else if (signals.timing.jitter > 20) {
         totalScore -= 10;
-        penalties.push({ reason: "High frame jitter", points: -10 });
+        penalties.push({ reason: "Suspiciously perfect timing", points: -10 });
+      } else if (signals.timing.jitter > 25) { // Increased threshold from 20 to 25
+        totalScore -= 8;
+        penalties.push({ reason: "High frame jitter", points: -8 });
       }
 
-      // Landmark signals (weight: 35%)
+      // Landmark signals (weight: 20% - reduced from 35%)
       if (!signals.landmark.faceDetected) {
-        totalScore -= 20;
-        penalties.push({ reason: "No motion detected", points: -20 });
+        totalScore -= 10;
+        penalties.push({ reason: "No motion detected", points: -10 });
       }
       if (!signals.landmark.movementNatural) {
-        totalScore -= 25;
-        penalties.push({ reason: "Unnatural movement pattern", points: -25 });
-      }
-      if (signals.landmark.confidenceScore < 10) {
         totalScore -= 15;
-        penalties.push({ reason: "Very low motion confidence", points: -15 });
+        penalties.push({ reason: "Unnatural movement pattern", points: -15 });
+      }
+      if (signals.landmark.confidenceScore < 5) { // Reduced threshold from 10 to 5
+        totalScore -= 10;
+        penalties.push({ reason: "Very low motion confidence", points: -10 });
       }
 
       // Ensure score doesn't go negative
@@ -86,17 +86,17 @@ function Score({ signals, onScoreCalculated, onEvaluate, isEvaluating }) {
 
   const getScoreClass = () => {
     if (score === null) return 'unknown';
-    if (score >= 80) return 'high';
-    if (score >= 60) return 'medium';
-    if (score >= 40) return 'low';
+    if (score >= 75) return 'high';
+    if (score >= 55) return 'medium';
+    if (score >= 35) return 'low';
     return 'critical';
   };
 
   const getScoreLabel = () => {
     if (score === null) return 'Calculating...';
-    if (score >= 80) return 'High Trust';
-    if (score >= 60) return 'Medium Trust';
-    if (score >= 40) return 'Low Trust';
+    if (score >= 75) return 'High Trust';
+    if (score >= 55) return 'Medium Trust';
+    if (score >= 35) return 'Low Trust';
     return 'Critical - Do Not Trust';
   };
 
