@@ -450,29 +450,6 @@ export default function RppgAnalyze({ stream, onSignalsUpdate }) {
         </div>
       </div>
 
-      {!rppgData.heartbeatDetected && (
-        <div style={{ 
-          marginTop: '1rem', 
-          padding: '1rem', 
-          background: 'rgba(239, 68, 68, 0.1)', 
-          borderRadius: '6px', 
-          border: '1px solid rgba(239, 68, 68, 0.2)' 
-        }}>
-          <div style={{ color: '#fca5a5', fontWeight: '600', marginBottom: '0.5rem', fontSize: '0.875rem' }}>
-            No Heartbeat Detected
-          </div>
-          <div style={{ fontSize: '0.8rem', color: '#9ca3af', lineHeight: '1.5' }}>
-            This may indicate:
-            <ul style={{ margin: '0.5rem 0 0 1.25rem', padding: 0 }}>
-              <li>AI-generated face (no blood flow)</li>
-              <li>Pre-recorded video</li>
-              <li>Poor lighting conditions</li>
-              <li>Face too far from camera</li>
-            </ul>
-          </div>
-        </div>
-      )}
-
       <div className="help-text" style={{ marginTop: '1rem', fontSize: '0.8rem', lineHeight: '1.5' }}>
         rPPG detects subtle color changes in skin caused by blood flow. AI-generated faces lack real circulation.
       </div>

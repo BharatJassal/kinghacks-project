@@ -543,25 +543,6 @@ export default function LandmarkAnalyze({ stream, onSignalsUpdate, onDeepfakeUpd
         </div>
       </div>
 
-      {deepfakeData.warnings.length > 0 && (
-        <div style={{ 
-          marginTop: '1rem', 
-          padding: '1rem', 
-          background: 'rgba(239, 68, 68, 0.1)', 
-          borderRadius: '6px', 
-          border: '1px solid rgba(239, 68, 68, 0.2)' 
-        }}>
-          <div style={{ color: '#fca5a5', fontWeight: '600', marginBottom: '0.5rem', fontSize: '0.875rem' }}>
-            Deepfake Indicators Detected
-          </div>
-          <ul style={{ margin: 0, paddingLeft: '1.25rem', fontSize: '0.8rem', color: '#9ca3af' }}>
-            {deepfakeData.warnings.map((warning, idx) => (
-              <li key={idx}>{warning}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-
       <div className="help-text" style={{ marginTop: '1rem', fontSize: '0.8rem', lineHeight: '1.5' }}>
         Detects: Blink patterns • Edge artifacts • Color consistency • Facial symmetry • Micro-expressions
       </div>

@@ -48,6 +48,7 @@ function Dashboard() {
   const [trustScore, setTrustScore] = useState(null);
   const [backendResponse, setBackendResponse] = useState(null);
   const [isEvaluating, setIsEvaluating] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
   // Aggregate all signals for trust scoring
   const allSignals = {
@@ -79,12 +80,14 @@ function Dashboard() {
       
       const result = await response.json();
       setBackendResponse(result);
+      setShowPopup(true); // Show popup instead of bottom section
     } catch (error) {
       console.error('Backend evaluation failed:', error);
       setBackendResponse({
         error: 'Failed to connect to backend',
         details: error.message
       });
+      setShowPopup(true); // Show popup even on error
     } finally {
       setIsEvaluating(false);
     }
@@ -170,17 +173,22 @@ function Dashboard() {
             onSignalsUpdate={setEnvironmentSignals}
           />
         </section>
+      </div>
 
-        {/* Backend response - Full width at bottom */}
-        {backendResponse && (
-          <section className="response-section">
-            <h2>Backend Governance Decision</h2>
-            <div className="response-card">
+      {/* Popup Modal for Backend Response */}
+      {showPopup && backendResponse && (
+        <div className="modal-overlay" onClick={() => setShowPopup(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Backend Governance Decision</h2>
+              <button className="modal-close" onClick={() => setShowPopup(false)}>×</button>
+            </div>
+            <div className="modal-body">
               <pre>{JSON.stringify(backendResponse, null, 2)}</pre>
             </div>
-          </section>
-        )}
-      </div>
+          </div>
+        </div>
+      )}
 
       <footer className="dashboard-footer">
         <p>All video processing happens client-side — No raw video transmitted</p>
