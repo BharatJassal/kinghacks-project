@@ -4,6 +4,7 @@ import DeviceInspect from './DeviceInspect';
 import FrameTiming from './FrameTiming';
 import LandmarkAnalyze from './LandmarkAnalyze';
 import EnvironmentAnalyze from './EnvironmentAnalyze';
+import RppgAnalyze from './RppgAnalyze';
 import Score from './Score';
 
 function Dashboard() {
@@ -29,6 +30,21 @@ function Dashboard() {
     suspiciousViewport: false,
     webDriverDetected: false
   });
+  const [deepfakeSignals, setDeepfakeSignals] = useState({
+    deepfakeProbability: 0,
+    blinkRate: 0,
+    isLikelyDeepfake: false,
+    warnings: []
+  });
+  const [rppgSignals, setRppgSignals] = useState({
+    heartRate: 0,
+    hrv: 0,
+    heartbeatDetected: false,
+    isPhysiological: true,
+    signalQuality: 0,
+    confidence: 0,
+    noHeartbeat: false
+  });
   const [trustScore, setTrustScore] = useState(null);
   const [backendResponse, setBackendResponse] = useState(null);
   const [isEvaluating, setIsEvaluating] = useState(false);
@@ -38,7 +54,9 @@ function Dashboard() {
     device: deviceSignals,
     timing: timingSignals,
     landmark: landmarkSignals,
-    environment: environmentSignals
+    environment: environmentSignals,
+    deepfake: deepfakeSignals,
+    rppg: rppgSignals
   };
 
   // Handle evaluation request to backend
@@ -53,6 +71,8 @@ function Dashboard() {
         body: JSON.stringify({
           trustScore: scoreData.score,
           signals: scoreData.signals,
+          deepfakeAnalysis: deepfakeSignals,
+          rppgAnalysis: rppgSignals,
           timestamp: new Date().toISOString()
         })
       });
@@ -74,7 +94,7 @@ function Dashboard() {
     <div className="dashboard">
       <header className="dashboard-header">
         <h1>Human Presence Trust System</h1>
-        <p className="subtitle">Privacy-first biometric verification</p>
+        <p className="subtitle">Privacy-first biometric verification with AI deepfake detection & rPPG heartbeat analysis</p>
       </header>
 
       <div className="dashboard-grid">
@@ -126,12 +146,22 @@ function Dashboard() {
           />
         </section>
 
-        {/* Landmark analysis */}
+        {/* Movement analysis - NOW WITH DEEPFAKE DETECTION */}
         <section className="signal-section">
-          <h2>Movement Analysis</h2>
+          <h2>🤖 AI Deepfake Detection</h2>
           <LandmarkAnalyze 
             stream={stream}
             onSignalsUpdate={setLandmarkSignals}
+            onDeepfakeUpdate={setDeepfakeSignals}
+          />
+        </section>
+
+        {/* rPPG HEARTBEAT DETECTION - NEW */}
+        <section className="signal-section">
+          <h2>❤️ rPPG Heartbeat Detection</h2>
+          <RppgAnalyze 
+            stream={stream}
+            onSignalsUpdate={setRppgSignals}
           />
         </section>
 
