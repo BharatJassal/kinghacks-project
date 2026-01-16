@@ -1,12 +1,9 @@
-# backend/server.py
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from ibm.cos import log_decision_to_cos
 from schemas import TrustEvaluationPayload, GovernanceResponse
 from governance import evaluate_governance
 
-# Optional IBM explanation hook (safe stub)
 try:
     from ibm.watsonx import generate_explanation
 except ImportError:
@@ -20,10 +17,9 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# --- CORS (allow React frontend) ---
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Hackathon-safe; restrict in prod
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

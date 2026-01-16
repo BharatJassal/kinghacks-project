@@ -430,7 +430,7 @@ export default function LandmarkAnalyze({ stream, onSignalsUpdate, onDeepfakeUpd
   if (!stream || !landmarkData.isAnalyzing) {
     return (
       <div className="landmark-analyze idle">
-        <p>⏸️ Waiting for video stream...</p>
+        <p>Waiting for video stream...</p>
       </div>
     );
   }
@@ -438,7 +438,7 @@ export default function LandmarkAnalyze({ stream, onSignalsUpdate, onDeepfakeUpd
   if (landmarkData.error) {
     return (
       <div className="landmark-analyze error">
-        <p>⚠️ Analysis Error: {landmarkData.error}</p>
+        <p>Analysis Error: {landmarkData.error}</p>
       </div>
     );
   }
@@ -466,16 +466,15 @@ export default function LandmarkAnalyze({ stream, onSignalsUpdate, onDeepfakeUpd
           color: '#9ca3af',
           fontWeight: '600'
         }}>
-          {deepfakeData.deepfakeProbability > 60 ? '🚨 HIGH RISK - Likely AI Generated' :
-           deepfakeData.deepfakeProbability > 30 ? '⚡ MODERATE RISK' :
-           '✓ LOW RISK - Likely Real Person'}
+          {deepfakeData.deepfakeProbability > 60 ? 'HIGH RISK - Likely AI Generated' :
+           deepfakeData.deepfakeProbability > 30 ? 'MODERATE RISK' :
+           'LOW RISK - Likely Real Person'}
         </div>
       </div>
 
-      {/* DEEPFAKE METRICS */}
       <div className="signal-card" style={{ marginBottom: '1rem' }}>
         <div style={{ fontWeight: '600', marginBottom: '0.75rem', color: '#60a5fa', fontSize: '0.875rem' }}>
-          🤖 Deepfake Indicators
+          Deepfake Indicators
         </div>
 
         <div className="signal-row">
@@ -514,16 +513,15 @@ export default function LandmarkAnalyze({ stream, onSignalsUpdate, onDeepfakeUpd
         </div>
       </div>
 
-      {/* MOTION DETECTION METRICS */}
       <div className="signal-card">
         <div style={{ fontWeight: '600', marginBottom: '0.75rem', color: '#34d399', fontSize: '0.875rem' }}>
-          👤 Motion Analysis
+          Motion Analysis
         </div>
 
         <div className="signal-row">
           <span className="signal-label">Motion Detected</span>
           <span className={`signal-value ${landmarkData.faceDetected ? 'good' : 'bad'}`}>
-            {landmarkData.faceDetected ? '✓ Yes' : '✗ No'}
+            {landmarkData.faceDetected ? 'Yes' : 'No'}
           </span>
         </div>
 
@@ -535,7 +533,7 @@ export default function LandmarkAnalyze({ stream, onSignalsUpdate, onDeepfakeUpd
         <div className="signal-row">
           <span className="signal-label">Movement Pattern</span>
           <span className={`signal-value ${landmarkData.movementNatural ? 'good' : 'bad'}`}>
-            {landmarkData.movementNatural ? '✓ Natural' : '⚠️ Suspicious'}
+            {landmarkData.movementNatural ? 'Natural' : 'Suspicious'}
           </span>
         </div>
 
@@ -545,7 +543,6 @@ export default function LandmarkAnalyze({ stream, onSignalsUpdate, onDeepfakeUpd
         </div>
       </div>
 
-      {/* WARNINGS */}
       {deepfakeData.warnings.length > 0 && (
         <div style={{ 
           marginTop: '1rem', 
@@ -555,7 +552,7 @@ export default function LandmarkAnalyze({ stream, onSignalsUpdate, onDeepfakeUpd
           border: '1px solid rgba(239, 68, 68, 0.2)' 
         }}>
           <div style={{ color: '#fca5a5', fontWeight: '600', marginBottom: '0.5rem', fontSize: '0.875rem' }}>
-            🚨 Deepfake Indicators Detected
+            Deepfake Indicators Detected
           </div>
           <ul style={{ margin: 0, paddingLeft: '1.25rem', fontSize: '0.8rem', color: '#9ca3af' }}>
             {deepfakeData.warnings.map((warning, idx) => (
@@ -566,7 +563,7 @@ export default function LandmarkAnalyze({ stream, onSignalsUpdate, onDeepfakeUpd
       )}
 
       <div className="help-text" style={{ marginTop: '1rem', fontSize: '0.8rem', lineHeight: '1.5' }}>
-        💡 Detects: Blink patterns • Edge artifacts • Color consistency • Facial symmetry • Micro-expressions
+        Detects: Blink patterns • Edge artifacts • Color consistency • Facial symmetry • Micro-expressions
       </div>
     </div>
   );

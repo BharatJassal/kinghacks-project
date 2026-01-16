@@ -146,9 +146,8 @@ function Dashboard() {
           />
         </section>
 
-        {/* Movement analysis - NOW WITH DEEPFAKE DETECTION */}
         <section className="signal-section">
-          <h2>🤖 AI Deepfake Detection</h2>
+          <h2>AI Deepfake Detection</h2>
           <LandmarkAnalyze 
             stream={stream}
             onSignalsUpdate={setLandmarkSignals}
@@ -156,9 +155,8 @@ function Dashboard() {
           />
         </section>
 
-        {/* rPPG HEARTBEAT DETECTION - NEW */}
         <section className="signal-section">
-          <h2>❤️ rPPG Heartbeat Detection</h2>
+          <h2>rPPG Heartbeat Detection</h2>
           <RppgAnalyze 
             stream={stream}
             onSignalsUpdate={setRppgSignals}
@@ -185,7 +183,7 @@ function Dashboard() {
       </div>
 
       <footer className="dashboard-footer">
-        <p>🔒 All video processing happens client-side • No raw video transmitted</p>
+        <p>All video processing happens client-side - No raw video transmitted</p>
       </footer>
     </div>
   );

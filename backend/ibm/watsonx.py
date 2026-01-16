@@ -1,11 +1,4 @@
 def generate_explanation(flags, trust_score):
-    """
-    Generates a human-readable explanation for a governance decision.
-
-    In production, this function would call IBM watsonx.ai (Granite).
-    For hackathon/demo purposes, this provides a deterministic fallback.
-    """
-
     if not flags:
         return (
             "No integrity risks were detected. "

@@ -15,7 +15,7 @@ function WebCamFeed({ onStreamReady }) {
     return (
       <div className="webcam-feed error">
         <div className="error-message">
-          <p>⚠️ <strong>Camera Access Error</strong></p>
+          <p><strong>Camera Access Error</strong></p>
           <p>{error}</p>
           <p className="help-text">
             Please ensure camera permissions are granted and no other application is using the camera.
@@ -37,7 +37,7 @@ function WebCamFeed({ onStreamReady }) {
         />
         {!ready && (
           <div className="loading-overlay">
-            <p>📹 Requesting camera access...</p>
+            <p>Requesting camera access...</p>
             <p className="help-text">Please allow camera permissions in your browser</p>
           </div>
         )}

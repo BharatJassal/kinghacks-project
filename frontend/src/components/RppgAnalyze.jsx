@@ -314,7 +314,7 @@ export default function RppgAnalyze({ stream, onSignalsUpdate }) {
   if (!stream || !rppgData.isAnalyzing) {
     return (
       <div className="rppg-analyze idle">
-        <p>⏸️ Waiting for video stream...</p>
+        <p>Waiting for video stream...</p>
       </div>
     );
   }
@@ -322,7 +322,7 @@ export default function RppgAnalyze({ stream, onSignalsUpdate }) {
   if (rppgData.error) {
     return (
       <div className="rppg-analyze error">
-        <p>⚠️ Analysis Error: {rppgData.error}</p>
+        <p>Analysis Error: {rppgData.error}</p>
       </div>
     );
   }
@@ -383,7 +383,7 @@ export default function RppgAnalyze({ stream, onSignalsUpdate }) {
             fontSize: '3rem',
             animation: rppgData.heartbeatDetected ? 'pulse 1s ease-in-out infinite' : 'none'
           }}>
-            {rppgData.heartbeatDetected ? '❤️' : '💔'}
+            {rppgData.heartbeatDetected ? 'HR' : 'NO'}
           </div>
         </div>
 
@@ -395,16 +395,16 @@ export default function RppgAnalyze({ stream, onSignalsUpdate }) {
           fontWeight: '600',
           color: !rppgData.heartbeatDetected ? '#fca5a5' : '#86efac'
         }}>
-          {!rppgData.heartbeatDetected ? '⚠️ NO HEARTBEAT DETECTED' : 
-           !rppgData.isPhysiological ? '⚠️ ABNORMAL SIGNAL' :
-           '✓ HEARTBEAT DETECTED'}
+          {!rppgData.heartbeatDetected ? 'NO HEARTBEAT DETECTED' : 
+           !rppgData.isPhysiological ? 'ABNORMAL SIGNAL' :
+           'HEARTBEAT DETECTED'}
         </div>
       </div>
 
       {/* DETAILED METRICS */}
       <div className="signal-card">
         <div style={{ fontWeight: '600', marginBottom: '0.75rem', color: '#ec4899', fontSize: '0.875rem' }}>
-          ❤️ rPPG Metrics
+          rPPG Metrics
         </div>
 
         <div className="signal-row">
@@ -445,12 +445,11 @@ export default function RppgAnalyze({ stream, onSignalsUpdate }) {
         <div className="signal-row">
           <span className="signal-label">Physiological</span>
           <span className={`signal-value ${rppgData.isPhysiological ? 'good' : 'bad'}`}>
-            {rppgData.isPhysiological ? '✓ Yes' : '✗ No'}
+            {rppgData.isPhysiological ? 'Yes' : 'No'}
           </span>
         </div>
       </div>
 
-      {/* WARNING MESSAGE */}
       {!rppgData.heartbeatDetected && (
         <div style={{ 
           marginTop: '1rem', 
@@ -460,7 +459,7 @@ export default function RppgAnalyze({ stream, onSignalsUpdate }) {
           border: '1px solid rgba(239, 68, 68, 0.2)' 
         }}>
           <div style={{ color: '#fca5a5', fontWeight: '600', marginBottom: '0.5rem', fontSize: '0.875rem' }}>
-            🚨 No Heartbeat Detected
+            No Heartbeat Detected
           </div>
           <div style={{ fontSize: '0.8rem', color: '#9ca3af', lineHeight: '1.5' }}>
             This may indicate:
@@ -475,7 +474,7 @@ export default function RppgAnalyze({ stream, onSignalsUpdate }) {
       )}
 
       <div className="help-text" style={{ marginTop: '1rem', fontSize: '0.8rem', lineHeight: '1.5' }}>
-        💡 rPPG detects subtle color changes in skin caused by blood flow. AI-generated faces lack real circulation.
+        rPPG detects subtle color changes in skin caused by blood flow. AI-generated faces lack real circulation.
       </div>
 
       <style>{`

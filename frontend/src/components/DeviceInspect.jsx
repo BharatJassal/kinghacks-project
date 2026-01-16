@@ -100,7 +100,7 @@ export default function DeviceInspect({ stream, onSignalsUpdate }) {
   if (deviceInfo.isLoading) {
     return (
       <div className="device-inspect loading">
-        <p>🔍 Inspecting devices...</p>
+        <p>Inspecting devices...</p>
       </div>
     );
   }
@@ -108,7 +108,7 @@ export default function DeviceInspect({ stream, onSignalsUpdate }) {
   if (deviceInfo.error) {
     return (
       <div className="device-inspect error">
-        <p>⚠️ Error: {deviceInfo.error}</p>
+        <p>Error: {deviceInfo.error}</p>
       </div>
     );
   }
@@ -123,18 +123,18 @@ export default function DeviceInspect({ stream, onSignalsUpdate }) {
         <div className="signal-row">
           <span className="signal-label">Virtual Camera</span>
           <span className={`signal-value ${deviceInfo.hasVirtualCamera ? 'bad' : 'good'}`}>
-            {deviceInfo.hasVirtualCamera ? '⚠️ Detected' : '✓ None'}
+            {deviceInfo.hasVirtualCamera ? 'Detected' : 'None'}
           </span>
         </div>
       </div>
 
       {deviceInfo.activeCamera && (
         <div className="signal-card" style={{ marginTop: '1rem', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)' }}>
-          <div style={{ fontWeight: '600', color: '#60a5fa', marginBottom: '0.5rem', fontSize: '0.875rem' }}>📹 Active Camera</div>
+          <div style={{ fontWeight: '600', color: '#60a5fa', marginBottom: '0.5rem', fontSize: '0.875rem' }}>Active Camera</div>
           <div style={{ fontSize: '0.85rem', color: '#d1d5db' }}>{deviceInfo.activeCamera.label}</div>
           {detectVirtualCamera(deviceInfo.activeCamera.label) && (
             <div style={{ marginTop: '0.5rem', padding: '0.5rem', background: 'rgba(239, 68, 68, 0.1)', borderRadius: '6px', color: '#fca5a5', fontSize: '0.8rem', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
-              ⚠️ Virtual camera detected
+              Virtual camera detected
             </div>
           )}
         </div>
