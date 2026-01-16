@@ -3,6 +3,7 @@ import WebCamFeed from './WebCamFeed';
 import DeviceInspect from './DeviceInspect';
 import FrameTiming from './FrameTiming';
 import LandmarkAnalyze from './LandmarkAnalyze';
+import EnvironmentAnalyze from './EnvironmentAnalyze';
 import Score from './Score';
 
 function Dashboard() {
@@ -22,6 +23,12 @@ function Dashboard() {
     confidenceScore: 0,
     movementNatural: true
   });
+  const [environmentSignals, setEnvironmentSignals] = useState({
+    isHeadless: false,
+    hasAutomationTools: false,
+    suspiciousViewport: false,
+    webDriverDetected: false
+  });
   const [trustScore, setTrustScore] = useState(null);
   const [backendResponse, setBackendResponse] = useState(null);
   const [isEvaluating, setIsEvaluating] = useState(false);
@@ -30,7 +37,8 @@ function Dashboard() {
   const allSignals = {
     device: deviceSignals,
     timing: timingSignals,
-    landmark: landmarkSignals
+    landmark: landmarkSignals,
+    environment: environmentSignals
   };
 
   // Handle evaluation request to backend
@@ -76,6 +84,17 @@ function Dashboard() {
           <WebCamFeed onStreamReady={setStream} />
         </section>
 
+        {/* Trust score calculator */}
+        <section className="score-section">
+          <h2>Trust Score</h2>
+          <Score 
+            signals={allSignals}
+            onScoreCalculated={setTrustScore}
+            onEvaluate={handleEvaluate}
+            isEvaluating={isEvaluating}
+          />
+        </section>
+
         {/* Device inspection */}
         <section className="signal-section">
           <h2>Device Analysis</h2>
@@ -94,23 +113,20 @@ function Dashboard() {
           />
         </section>
 
-        {/* Landmark analysis (future: face detection) */}
+        {/* Landmark analysis */}
         <section className="signal-section">
-          <h2>Landmark Analysis</h2>
+          <h2>Movement Analysis</h2>
           <LandmarkAnalyze 
             stream={stream}
             onSignalsUpdate={setLandmarkSignals}
           />
         </section>
 
-        {/* Trust score calculator */}
-        <section className="score-section">
-          <h2>Trust Score</h2>
-          <Score 
-            signals={allSignals}
-            onScoreCalculated={setTrustScore}
-            onEvaluate={handleEvaluate}
-            isEvaluating={isEvaluating}
+        {/* Environment analysis */}
+        <section className="signal-section">
+          <h2>Environment Check</h2>
+          <EnvironmentAnalyze 
+            onSignalsUpdate={setEnvironmentSignals}
           />
         </section>
 

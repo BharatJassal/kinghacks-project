@@ -6,7 +6,7 @@ function Score({ signals, onScoreCalculated, onEvaluate, isEvaluating }) {
 
   useEffect(() => {
     // Wait for all signal sources to have data
-    if (!signals.device || !signals.timing || !signals.landmark) {
+    if (!signals.device || !signals.timing || !signals.landmark || !signals.environment) {
       return;
     }
 
@@ -50,6 +50,20 @@ function Score({ signals, onScoreCalculated, onEvaluate, isEvaluating }) {
       if (signals.landmark.confidenceScore < 5) { // Reduced threshold from 10 to 5
         totalScore -= 10;
         penalties.push({ reason: "Very low motion confidence", points: -10 });
+      }
+
+      // Environment signals (weight: 20%)
+      if (signals.environment.isHeadless) {
+        totalScore -= 20;
+        penalties.push({ reason: "Headless browser detected", points: -20 });
+      }
+      if (signals.environment.hasAutomationTools) {
+        totalScore -= 15;
+        penalties.push({ reason: "Automation tools detected", points: -15 });
+      }
+      if (signals.environment.suspiciousViewport) {
+        totalScore -= 8;
+        penalties.push({ reason: "Suspicious viewport size", points: -8 });
       }
 
       // Ensure score doesn't go negative
@@ -160,7 +174,7 @@ function Score({ signals, onScoreCalculated, onEvaluate, isEvaluating }) {
         border: '1px solid rgba(59, 130, 246, 0.1)'
       }}>
         <p>
-          <strong style={{ color: '#d1d5db' }}>Scoring:</strong> Device (30%) • Timing (35%) • Movement (35%)
+          <strong style={{ color: '#d1d5db' }}>Scoring:</strong> Device (35%) • Timing (25%) • Movement (20%) • Environment (20%)
         </p>
       </div>
     </div>
