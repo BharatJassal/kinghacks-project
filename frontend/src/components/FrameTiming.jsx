@@ -113,7 +113,7 @@ export default function FrameTiming({ stream, onSignalsUpdate }) {
   if (!stream || !timingData.isAnalyzing) {
     return (
       <div className="frame-timing idle">
-        <p>⏸️ Waiting for video stream...</p>
+        <p>Waiting for video stream...</p>
       </div>
     );
   }
@@ -173,7 +173,7 @@ export default function FrameTiming({ stream, onSignalsUpdate }) {
           border: '1px solid rgba(239, 68, 68, 0.2)' 
         }}>
           <div style={{ color: '#fca5a5', fontWeight: '600', marginBottom: '0.25rem', fontSize: '0.875rem' }}>
-            ⚠️ Timing Anomaly
+            Timing Anomaly
           </div>
           <div style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
             Non-standard frame timing detected
@@ -182,7 +182,7 @@ export default function FrameTiming({ stream, onSignalsUpdate }) {
       )}
 
       <div className="help-text" style={{ marginTop: '1rem', fontSize: '0.8rem', lineHeight: '1.5' }}>
-        💡 Normal: 25-30 FPS, 5-10ms jitter
+        Normal: 25-30 FPS, 5-10ms jitter
       </div>
     </div>
   );

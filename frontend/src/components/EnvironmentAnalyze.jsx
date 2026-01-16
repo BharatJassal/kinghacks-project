@@ -87,7 +87,7 @@ export default function EnvironmentAnalyze({ onSignalsUpdate }) {
   if (!envData.isAnalyzing) {
     return (
       <div className="environment-analyze idle">
-        <p>⏸️ Initializing environment check...</p>
+        <p>Initializing environment check...</p>
       </div>
     );
   }
@@ -98,14 +98,14 @@ export default function EnvironmentAnalyze({ onSignalsUpdate }) {
         <div className="signal-row">
           <span className="signal-label">Headless Browser</span>
           <span className={`signal-value ${envData.isHeadless ? 'bad' : 'good'}`}>
-            {envData.isHeadless ? '⚠️ Detected' : '✓ None'}
+            {envData.isHeadless ? 'Detected' : 'None'}
           </span>
         </div>
 
         <div className="signal-row">
           <span className="signal-label">Automation Tools</span>
           <span className={`signal-value ${envData.hasAutomationTools ? 'bad' : 'good'}`}>
-            {envData.hasAutomationTools ? '⚠️ Detected' : '✓ None'}
+            {envData.hasAutomationTools ? 'Detected' : 'None'}
           </span>
         </div>
 
@@ -119,7 +119,7 @@ export default function EnvironmentAnalyze({ onSignalsUpdate }) {
         <div className="signal-row">
           <span className="signal-label">WebDriver</span>
           <span className={`signal-value ${envData.webDriverDetected ? 'bad' : 'good'}`}>
-            {envData.webDriverDetected ? '⚠️ Active' : '✓ Inactive'}
+            {envData.webDriverDetected ? 'Active' : 'Inactive'}
           </span>
         </div>
       </div>
@@ -133,7 +133,7 @@ export default function EnvironmentAnalyze({ onSignalsUpdate }) {
           border: '1px solid rgba(239, 68, 68, 0.2)' 
         }}>
           <div style={{ color: '#fca5a5', fontWeight: '600', marginBottom: '0.25rem', fontSize: '0.875rem' }}>
-            ⚠️ Suspicious Environment
+            Suspicious Environment
           </div>
           <div style={{ fontSize: '0.8rem', color: '#9ca3af' }}>
             Automation or headless browser detected
@@ -142,7 +142,7 @@ export default function EnvironmentAnalyze({ onSignalsUpdate }) {
       )}
 
       <div className="help-text" style={{ marginTop: '1rem', fontSize: '0.8rem', lineHeight: '1.5' }}>
-        💡 Checks for automation tools & bot indicators
+        Checks for automation tools & bot indicators
       </div>
     </div>
   );
