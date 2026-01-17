@@ -148,7 +148,8 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <header className="dashboard-header">
-        <h1>Human Presence Trust System</h1>
+        <h1>Certify</h1>
+        <h2>Human Presence Trust System</h2>
         <p className="subtitle">
           Privacy-first biometric verification with AI deepfake detection & rPPG heartbeat analysis
         </p>
@@ -260,11 +261,47 @@ function Dashboard() {
         <div className="modal-overlay" onClick={() => setShowPopup(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>Backend Governance Decision</h2>
+              <h2>Security Assessment</h2>
               <button className="modal-close" onClick={() => setShowPopup(false)}>×</button>
             </div>
             <div className="modal-body">
-              <pre>{JSON.stringify(backendResponse, null, 2)}</pre>
+              <div className="assessment-result">
+                {/* Risk Level Badge */}
+                <div className={`risk-badge risk-${backendResponse.risk_level?.toLowerCase() || 'unknown'}`}>
+                  <div className="risk-indicator">
+                    {backendResponse.risk_level === 'HIGH' && '🔴'}
+                    {backendResponse.risk_level === 'MEDIUM' && '🟡'}
+                    {backendResponse.risk_level === 'LOW' && '🟢'}
+                  </div>
+                  <div className="risk-info">
+                    <span className="risk-label">Risk Level</span>
+                    <span className="risk-value">{backendResponse.risk_level || 'UNKNOWN'}</span>
+                  </div>
+                </div>
+
+                {/* Detected Issues */}
+                {backendResponse.flags && backendResponse.flags.length > 0 && (
+                  <div className="issues-section">
+                    <h3>Detected Issues ({backendResponse.flags.length})</h3>
+                    <ul className="issues-list">
+                      {backendResponse.flags.map((flag, index) => (
+                        <li key={index} className="issue-item">
+                          <span className="issue-bullet">•</span>
+                          <span className="issue-text">
+                            {flag.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase())}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Warning Message */}
+                <div className="warning-message">
+                  <span className="warning-icon">⚠️</span>
+                  <p>These indicators suggest the input may be non-live, manipulated, or automated.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
